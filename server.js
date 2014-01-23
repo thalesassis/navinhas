@@ -9,7 +9,6 @@ app.configure(function(){
   app.use(express.json()); 
   app.use(express.urlencoded());
   app.use(express.methodOverride());
-  app.use('/', express.static(__dirname));
 });
 
 app.get('/', function(req, res){
