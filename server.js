@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
-var mime = require('mime');
+var path = require('path');
+
+app.use(express.static(path.join(__dirname, '')));
 
 app.configure(function(){
   app.set('views', __dirname);
