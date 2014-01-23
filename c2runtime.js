@@ -12546,8 +12546,7 @@ cr.plugins_.Particles = function(runtime)
 	};
 	pluginProto.exps = new Exps();
 }());
-/*! Socket.IO.min.js build:0.8.7, production. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
-document.write("<script src='/socket.io/socket.io.js'></script>");
+
 ;
 ;
 cr.plugins_.Socket = function(runtime)
