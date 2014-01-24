@@ -12601,7 +12601,7 @@ cr.plugins_.Socket = function(runtime)
 			socket.disconnect();
 		this.lastAddress = host;
 		this.lastPort = port;
-		socket =  io.connect('http://' + host + ':' + port,{'force new connection': true});
+		socket =  io.connect('http://http://navinhas.cloudno.de/:9637',{'force new connection': true});
 		this.socket = socket;
 		var instance = this;
 		var runtime = instance.runtime;
