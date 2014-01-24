@@ -12547,9 +12547,7 @@ cr.plugins_.Particles = function(runtime)
 	pluginProto.exps = new Exps();
 }());
 /*! Socket.IO.min.js build:0.8.7, production. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
-document.write("<script src='/socket.io/socket.io.js'></script>");
-;
-;
+
 cr.plugins_.Socket = function(runtime)
 {
 	this.runtime = runtime;
@@ -12601,7 +12599,7 @@ cr.plugins_.Socket = function(runtime)
 			socket.disconnect();
 		this.lastAddress = host;
 		this.lastPort = port;
-		socket =  io.connect('http://http://navinhas.cloudno.de/',{'force new connection': true});
+		socket =  io.connect('http://navinhas.cloudno.de/',{'force new connection': true});
 		this.socket = socket;
 		var instance = this;
 		var runtime = instance.runtime;
