@@ -122,10 +122,7 @@
 		
 		// Pause and resume on page becoming visible/invisible
 		function onVisibilityChanged() {
-			if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
-				//cr_setSuspended(true);
-			else
-				//cr_setSuspended(false);
+			
 		};
 		
 		document.addEventListener("visibilitychange", onVisibilityChanged, false);
