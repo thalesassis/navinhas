@@ -12547,7 +12547,9 @@ cr.plugins_.Particles = function(runtime)
 	pluginProto.exps = new Exps();
 }());
 /*! Socket.IO.min.js build:0.8.7, production. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
-
+document.write("<script src='socket.io.js'><\/script>");
+;
+;
 cr.plugins_.Socket = function(runtime)
 {
 	this.runtime = runtime;
@@ -14730,6 +14732,166 @@ cr.plugins_.TiledBg = function(runtime)
 }());
 ;
 ;
+cr.behaviors.Anchor = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var behaviorProto = cr.behaviors.Anchor.prototype;
+	behaviorProto.Type = function(behavior, objtype)
+	{
+		this.behavior = behavior;
+		this.objtype = objtype;
+		this.runtime = behavior.runtime;
+	};
+	var behtypeProto = behaviorProto.Type.prototype;
+	behtypeProto.onCreate = function()
+	{
+	};
+	behaviorProto.Instance = function(type, inst)
+	{
+		this.type = type;
+		this.behavior = type.behavior;
+		this.inst = inst;				// associated object instance to modify
+		this.runtime = type.runtime;
+	};
+	var behinstProto = behaviorProto.Instance.prototype;
+	behinstProto.onCreate = function()
+	{
+		this.anch_left = this.properties[0];		// 0 = left, 1 = right
+		this.anch_top = this.properties[1];			// 0 = top, 1 = bottom
+		this.anch_right = this.properties[2];		// 0 = none, 1 = right
+		this.anch_bottom = this.properties[3];		// 0 = none, 1 = bottom
+		this.inst.update_bbox();
+		this.xleft = this.inst.bbox.left;
+		this.ytop = this.inst.bbox.top;
+		this.xright = this.runtime.original_width - this.inst.bbox.left;
+		this.ybottom = this.runtime.original_height - this.inst.bbox.top;
+		this.rdiff = this.runtime.original_width - this.inst.bbox.right;
+		this.bdiff = this.runtime.original_height - this.inst.bbox.bottom;
+		this.enabled = (this.properties[4] !== 0);
+	};
+	behinstProto.saveToJSON = function ()
+	{
+		return {
+			"xleft": this.xleft,
+			"ytop": this.ytop,
+			"xright": this.xright,
+			"ybottom": this.ybottom,
+			"rdiff": this.rdiff,
+			"bdiff": this.bdiff,
+			"enabled": this.enabled
+		};
+	};
+	behinstProto.loadFromJSON = function (o)
+	{
+		this.xleft = o["xleft"];
+		this.ytop = o["ytop"];
+		this.xright = o["xright"];
+		this.ybottom = o["ybottom"];
+		this.rdiff = o["rdiff"];
+		this.bdiff = o["bdiff"];
+		this.enabled = o["enabled"];
+	};
+	behinstProto.tick = function ()
+	{
+		if (!this.enabled)
+			return;
+		var n;
+		var layer = this.inst.layer;
+		var inst = this.inst;
+		var bbox = this.inst.bbox;
+		if (this.anch_left === 0)
+		{
+			inst.update_bbox();
+			n = (layer.viewLeft + this.xleft) - bbox.left;
+			if (n !== 0)
+			{
+				inst.x += n;
+				inst.set_bbox_changed();
+			}
+		}
+		else if (this.anch_left === 1)
+		{
+			inst.update_bbox();
+			n = (layer.viewRight - this.xright) - bbox.left;
+			if (n !== 0)
+			{
+				inst.x += n;
+				inst.set_bbox_changed();
+			}
+		}
+		if (this.anch_top === 0)
+		{
+			inst.update_bbox();
+			n = (layer.viewTop + this.ytop) - bbox.top;
+			if (n !== 0)
+			{
+				inst.y += n;
+				inst.set_bbox_changed();
+			}
+		}
+		else if (this.anch_top === 1)
+		{
+			inst.update_bbox();
+			n = (layer.viewBottom - this.ybottom) - bbox.top;
+			if (n !== 0)
+			{
+				inst.y += n;
+				inst.set_bbox_changed();
+			}
+		}
+		if (this.anch_right === 1)
+		{
+			inst.update_bbox();
+			n = (layer.viewRight - this.rdiff) - bbox.right;
+			if (n !== 0)
+			{
+				inst.width += n;
+				if (inst.width < 0)
+					inst.width = 0;
+				inst.set_bbox_changed();
+			}
+		}
+		if (this.anch_bottom === 1)
+		{
+			inst.update_bbox();
+			n = (layer.viewBottom - this.bdiff) - bbox.bottom;
+			if (n !== 0)
+			{
+				inst.height += n;
+				if (inst.height < 0)
+					inst.height = 0;
+				inst.set_bbox_changed();
+			}
+		}
+	};
+	function Cnds() {};
+	behaviorProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.SetEnabled = function (e)
+	{
+		if (this.enabled && e === 0)
+			this.enabled = false;
+		else if (!this.enabled && e !== 0)
+		{
+			this.inst.update_bbox();
+			this.xleft = this.inst.bbox.left;
+			this.ytop = this.inst.bbox.top;
+			this.xright = this.runtime.original_width - this.inst.bbox.left;
+			this.ybottom = this.runtime.original_height - this.inst.bbox.top;
+			this.rdiff = this.runtime.original_width - this.inst.bbox.right;
+			this.bdiff = this.runtime.original_height - this.inst.bbox.bottom;
+			this.enabled = true;
+		}
+	};
+	behaviorProto.acts = new Acts();
+	function Exps() {};
+	behaviorProto.exps = new Exps();
+}());
+;
+;
 cr.behaviors.Bullet = function(runtime)
 {
 	this.runtime = runtime;
@@ -15122,6 +15284,328 @@ cr.behaviors.Pin = function(runtime)
 }());
 ;
 ;
+cr.behaviors.custom = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var behaviorProto = cr.behaviors.custom.prototype;
+	behaviorProto.Type = function(behavior, objtype)
+	{
+		this.behavior = behavior;
+		this.objtype = objtype;
+		this.runtime = behavior.runtime;
+	};
+	var behtypeProto = behaviorProto.Type.prototype;
+	behtypeProto.onCreate = function()
+	{
+	};
+	behaviorProto.Instance = function(type, inst)
+	{
+		this.type = type;
+		this.behavior = type.behavior;
+		this.inst = inst;
+		this.runtime = type.runtime;
+		this.dx = 0;
+		this.dy = 0;
+		this.cancelStep = 0;
+	};
+	var behinstProto = behaviorProto.Instance.prototype;
+	behinstProto.onCreate = function()
+	{
+		this.stepMode = this.properties[0];	// 0=None, 1=Linear, 2=Horizontal then vertical, 3=Vertical then horizontal
+		this.pxPerStep = this.properties[1];
+		this.enabled = (this.properties[2] !== 0);
+	};
+	behinstProto.saveToJSON = function ()
+	{
+		return {
+			"dx": this.dx,
+			"dy": this.dy,
+			"cancelStep": this.cancelStep,
+			"enabled": this.enabled,
+			"stepMode": this.stepMode,
+			"pxPerStep": this.pxPerStep
+		};
+	};
+	behinstProto.loadFromJSON = function (o)
+	{
+		this.dx = o["dx"];
+		this.dy = o["dy"];
+		this.cancelStep = o["cancelStep"];
+		this.enabled = o["enabled"];
+		this.stepMode = o["stepMode"];
+		this.pxPerStep = o["pxPerStep"];
+	};
+	behinstProto.getSpeed = function ()
+	{
+		return Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+	};
+	behinstProto.getAngle = function ()
+	{
+		return Math.atan2(this.dy, this.dx);
+	};
+	function sign(x)
+	{
+		if (x === 0)
+			return 0;
+		else if (x < 0)
+			return -1;
+		else
+			return 1;
+	};
+	behinstProto.step = function (x, y, trigmethod)
+	{
+		if (x === 0 && y === 0)
+			return;
+		var startx = this.inst.x;
+		var starty = this.inst.y;
+		var sx, sy, prog;
+		var steps = Math.round(Math.sqrt(x * x + y * y) / this.pxPerStep);
+		if (steps === 0)
+			steps = 1;
+		var i;
+		for (i = 1; i <= steps; i++)
+		{
+			prog = i / steps;
+			this.inst.x = startx + x * prog;
+			this.inst.y = starty + y * prog;
+			this.inst.set_bbox_changed();
+			this.runtime.trigger(trigmethod, this.inst);
+			if (this.cancelStep === 1)
+			{
+				i--;
+				prog = i / steps;
+				this.inst.x = startx + x * prog;
+				this.inst.y = starty + y * prog;
+				this.inst.set_bbox_changed();
+				return;
+			}
+			else if (this.cancelStep === 2)
+			{
+				return;
+			}
+		}
+	};
+	behinstProto.tick = function ()
+	{
+		var dt = this.runtime.getDt(this.inst);
+		var mx = this.dx * dt;
+		var my = this.dy * dt;
+		var i, steps;
+		if ((this.dx === 0 && this.dy === 0) || !this.enabled)
+			return;
+		this.cancelStep = 0;
+		if (this.stepMode === 0)		// none
+		{
+			this.inst.x += mx;
+			this.inst.y += my;
+		}
+		else if (this.stepMode === 1)	// linear
+		{
+			this.step(mx, my, cr.behaviors.custom.prototype.cnds.OnCMStep);
+		}
+		else if (this.stepMode === 2)	// horizontal then vertical
+		{
+			this.step(mx, 0, cr.behaviors.custom.prototype.cnds.OnCMHorizStep);
+			this.cancelStep = 0;
+			this.step(0, my, cr.behaviors.custom.prototype.cnds.OnCMVertStep);
+		}
+		else if (this.stepMode === 3)	// vertical then horizontal
+		{
+			this.step(0, my, cr.behaviors.custom.prototype.cnds.OnCMVertStep);
+			this.cancelStep = 0;
+			this.step(mx, 0, cr.behaviors.custom.prototype.cnds.OnCMHorizStep);
+		}
+		this.inst.set_bbox_changed();
+	};
+	function Cnds() {};
+	Cnds.prototype.IsMoving = function ()
+	{
+		return this.dx != 0 || this.dy != 0;
+	};
+	Cnds.prototype.CompareSpeed = function (axis, cmp, s)
+	{
+		var speed;
+		switch (axis) {
+		case 0:		speed = this.getSpeed();	break;
+		case 1:		speed = this.dx;			break;
+		case 2:		speed = this.dy;			break;
+		}
+		return cr.do_cmp(speed, cmp, s);
+	};
+	Cnds.prototype.OnCMStep = function ()
+	{
+		return true;
+	};
+	Cnds.prototype.OnCMHorizStep = function ()
+	{
+		return true;
+	};
+	Cnds.prototype.OnCMVertStep = function ()
+	{
+		return true;
+	};
+	behaviorProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.Stop = function ()
+	{
+		this.dx = 0;
+		this.dy = 0;
+	};
+	Acts.prototype.Reverse = function (axis)
+	{
+		switch (axis) {
+		case 0:
+			this.dx *= -1;
+			this.dy *= -1;
+			break;
+		case 1:
+			this.dx *= -1;
+			break;
+		case 2:
+			this.dy *= -1;
+			break;
+		}
+	};
+	Acts.prototype.SetSpeed = function (axis, s)
+	{
+		var a;
+		switch (axis) {
+		case 0:
+			a = this.getAngle();
+			this.dx = Math.cos(a) * s;
+			this.dy = Math.sin(a) * s;
+			break;
+		case 1:
+			this.dx = s;
+			break;
+		case 2:
+			this.dy = s;
+			break;
+		}
+	};
+	Acts.prototype.Accelerate = function (axis, acc)
+	{
+		var dt = this.runtime.getDt(this.inst);
+		var ds = acc * dt;
+		var a;
+		switch (axis) {
+		case 0:
+			a = this.getAngle();
+			this.dx += Math.cos(a) * ds;
+			this.dy += Math.sin(a) * ds;
+			break;
+		case 1:
+			this.dx += ds;
+			break;
+		case 2:
+			this.dy += ds;
+			break;
+		}
+	};
+	Acts.prototype.AccelerateAngle = function (acc, a_)
+	{
+		var dt = this.runtime.getDt(this.inst);
+		var ds = acc * dt;
+		var a = cr.to_radians(a_);
+		this.dx += Math.cos(a) * ds;
+		this.dy += Math.sin(a) * ds;
+	};
+	Acts.prototype.AcceleratePos = function (acc, x, y)
+	{
+		var dt = this.runtime.getDt(this.inst);
+		var ds = acc * dt;
+		var a = Math.atan2(y - this.inst.y, x - this.inst.x);
+		this.dx += Math.cos(a) * ds;
+		this.dy += Math.sin(a) * ds;
+	};
+	Acts.prototype.SetAngleOfMotion = function (a_)
+	{
+		var a = cr.to_radians(a_);
+		var s = this.getSpeed();
+		this.dx = Math.cos(a) * s;
+		this.dy = Math.sin(a) * s;
+	};
+	Acts.prototype.RotateAngleOfMotionClockwise = function (a_)
+	{
+		var a = this.getAngle() + cr.to_radians(a_);
+		var s = this.getSpeed();
+		this.dx = Math.cos(a) * s;
+		this.dy = Math.sin(a) * s;
+	};
+	Acts.prototype.RotateAngleOfMotionCounterClockwise = function (a_)
+	{
+		var a = this.getAngle() - cr.to_radians(a_);
+		var s = this.getSpeed();
+		this.dx = Math.cos(a) * s;
+		this.dy = Math.sin(a) * s;
+	};
+	Acts.prototype.StopStepping = function (mode)
+	{
+		this.cancelStep = mode + 1;
+	};
+	Acts.prototype.PushOutSolid = function (mode)
+	{
+		var a, ux, uy;
+		switch (mode) {
+		case 0:
+			a = this.getAngle();
+			ux = Math.cos(a);
+			uy = Math.sin(a);
+			this.runtime.pushOutSolid(this.inst, -ux, -uy, Math.max(this.getSpeed() * 3, 100));
+			break;
+		case 1:
+			this.runtime.pushOutSolidNearest(this.inst);
+			break;
+		case 2:
+			this.runtime.pushOutSolid(this.inst, 0, -1, Math.max(Math.abs(this.dy) * 3, 100));
+			break;
+		case 3:
+			this.runtime.pushOutSolid(this.inst, 0, 1, Math.max(Math.abs(this.dy) * 3, 100));
+			break;
+		case 4:
+			this.runtime.pushOutSolid(this.inst, -1, 0, Math.max(Math.abs(this.dx) * 3, 100));
+			break;
+		case 5:
+			this.runtime.pushOutSolid(this.inst, 1, 0, Math.max(Math.abs(this.dx) * 3, 100));
+			break;
+		}
+	};
+	Acts.prototype.PushOutSolidAngle = function (a)
+	{
+		a = cr.to_radians(a);
+		var ux = Math.cos(a);
+		var uy = Math.sin(a);
+		this.runtime.pushOutSolid(this.inst, ux, uy, Math.max(this.getSpeed() * 3, 100));
+	};
+	Acts.prototype.SetEnabled = function (en)
+	{
+		this.enabled = (en === 1);
+	};
+	behaviorProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.Speed = function (ret)
+	{
+		ret.set_float(this.getSpeed());
+	};
+	Exps.prototype.MovingAngle = function (ret)
+	{
+		ret.set_float(cr.to_degrees(this.getAngle()));
+	};
+	Exps.prototype.dx = function (ret)
+	{
+		ret.set_float(this.dx);
+	};
+	Exps.prototype.dy = function (ret)
+	{
+		ret.set_float(this.dy);
+	};
+	behaviorProto.exps = new Exps();
+}());
+;
+;
 cr.behaviors.destroy = function(runtime)
 {
 	this.runtime = runtime;
@@ -15158,6 +15642,53 @@ cr.behaviors.destroy = function(runtime)
 		if (bbox.right < 0 || bbox.bottom < 0 || bbox.left > layout.width || bbox.top > layout.height)
 			this.runtime.DestroyInstance(this.inst);
 	};
+}());
+;
+;
+cr.behaviors.solid = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var behaviorProto = cr.behaviors.solid.prototype;
+	behaviorProto.Type = function(behavior, objtype)
+	{
+		this.behavior = behavior;
+		this.objtype = objtype;
+		this.runtime = behavior.runtime;
+	};
+	var behtypeProto = behaviorProto.Type.prototype;
+	behtypeProto.onCreate = function()
+	{
+	};
+	behaviorProto.Instance = function(type, inst)
+	{
+		this.type = type;
+		this.behavior = type.behavior;
+		this.inst = inst;				// associated object instance to modify
+		this.runtime = type.runtime;
+	};
+	var behinstProto = behaviorProto.Instance.prototype;
+	behinstProto.onCreate = function()
+	{
+		this.inst.extra.solidEnabled = (this.properties[0] !== 0);
+	};
+	behinstProto.tick = function ()
+	{
+	};
+	function Cnds() {};
+	Cnds.prototype.IsEnabled = function ()
+	{
+		return this.inst.extra.solidEnabled;
+	};
+	behaviorProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.SetEnabled = function (e)
+	{
+		this.inst.extra.solidEnabled = !!e;
+	};
+	behaviorProto.acts = new Acts();
 }());
 cr.getProjectModel = function() { return [
 	null,
@@ -15254,7 +15785,7 @@ cr.getProjectModel = function() { return [
 		cr.plugins_.Sprite,
 		false,
 		[3098446263109225,9555625435746144],
-		0,
+		2,
 		0,
 		null,
 		[
@@ -15267,11 +15798,21 @@ cr.getProjectModel = function() { return [
 			false,
 			9881757126993063,
 			[
-				["images/nave-sheet0.png", 2879, 0, 0, 48, 30, 1, 0.5, 0.5,[["Tiro", 0.979167, 0.5],["Foguete", 0.0625, 0.466667]],[0.270833,-0.133333,0.479167,0,0.270833,0.133333,0,0.333333,-0.4375,0.4,-0.5,0,-0.4375,-0.4,0,-0.333333],0]
+				["images/nave-sheet0.png", 2879, 0, 0, 48, 30, 1, 0.5, 0.5,[["Tiro", 0.979167, 0.5],["Foguete", 0.0625, 0.466667],["Fumaca", 0.625, 0.266667]],[-0.25651,-0.333333,0,-0.333333,0.210937,-0.329167,0.223958,-0.00416699,0.234375,0.325,0,0.333333,-0.247396,0.322917,-0.253906,0.0125],0]
 			]
 			]
 		],
 		[
+		[
+			"Solid",
+			cr.behaviors.solid,
+			315546672183411
+		]
+,		[
+			"CustomMovement",
+			cr.behaviors.custom,
+			4189792937806292
+		]
 		],
 		false,
 		false,
@@ -15299,7 +15840,7 @@ cr.getProjectModel = function() { return [
 		"t2",
 		cr.plugins_.Sprite,
 		false,
-		[],
+		[5313060354956948,4511590790728224],
 		2,
 		0,
 		null,
@@ -15386,22 +15927,6 @@ cr.getProjectModel = function() { return [
 	]
 ,	[
 		"t5",
-		cr.plugins_.Text,
-		false,
-		[],
-		0,
-		0,
-		null,
-		null,
-		[
-		],
-		false,
-		false,
-		5391629292054134,
-		[]
-	]
-,	[
-		"t6",
 		cr.plugins_.Socket,
 		false,
 		[],
@@ -15418,10 +15943,10 @@ cr.getProjectModel = function() { return [
 		,[]
 	]
 ,	[
-		"t7",
+		"t6",
 		cr.plugins_.TiledBg,
 		false,
-		[489649525691655,3608324608361265],
+		[489649525691655,3608324608361265,2911157718825998,662907923293007,8342344577293054,7563107327447525],
 		0,
 		0,
 		["images/controlador.png", 169, 3],
@@ -15434,7 +15959,7 @@ cr.getProjectModel = function() { return [
 		[]
 	]
 ,	[
-		"t8",
+		"t7",
 		cr.plugins_.Arr,
 		false,
 		[],
@@ -15447,6 +15972,201 @@ cr.getProjectModel = function() { return [
 		true,
 		false,
 		8316573808263296,
+		[]
+	]
+,	[
+		"t8",
+		cr.plugins_.Sprite,
+		false,
+		[],
+		1,
+		0,
+		null,
+		[
+			[
+			"Default",
+			5,
+			false,
+			1,
+			0,
+			false,
+			459879664407977,
+			[
+				["images/parede-sheet0.png", 155, 0, 0, 250, 250, 1, 0.5, 0.5,[],[],1]
+			]
+			]
+		],
+		[
+		[
+			"Solid",
+			cr.behaviors.solid,
+			744590580351089
+		]
+		],
+		false,
+		false,
+		9360032768658241,
+		[]
+	]
+,	[
+		"t9",
+		cr.plugins_.Sprite,
+		false,
+		[],
+		1,
+		0,
+		null,
+		[
+			[
+			"Cheio",
+			5,
+			false,
+			1,
+			0,
+			false,
+			865078460312613,
+			[
+				["images/saúde-sheet0.png", 570, 1, 1, 181, 29, 1, 0.502762, 0.517241,[],[-0.502762,-0.517241,0.497238,-0.517241,0.497238,-0.0344824,0.453039,0.206897,-0.00552443,0.206897,-0.502762,0.482759],0]
+			]
+			]
+,			[
+			"Metade",
+			5,
+			false,
+			1,
+			0,
+			false,
+			7710091111149804,
+			[
+				["images/saúde-sheet0.png", 570, 1, 31, 181, 29, 1, 0.502762, 0.517241,[],[-0.502762,-0.517241,0.497238,-0.517241,0.497238,-0.0344824,0.453039,0.206897,-0.00552443,0.206897,-0.502762,0.482759],0]
+			]
+			]
+,			[
+			"Pouco",
+			5,
+			false,
+			1,
+			0,
+			false,
+			8719501596082956,
+			[
+				["images/saúde-sheet0.png", 570, 1, 61, 181, 29, 1, 0.502762, 0.517241,[],[-0.502762,-0.517241,0.497238,-0.517241,0.497238,-0.0344824,0.453039,0.206897,-0.00552443,0.206897,-0.502762,0.482759],0]
+			]
+			]
+,			[
+			"Vazio",
+			5,
+			false,
+			1,
+			0,
+			false,
+			9832769098369905,
+			[
+				["images/saúde-sheet0.png", 570, 1, 91, 181, 29, 1, 0.502762, 0.517241,[],[-0.502762,-0.517241,0.497238,-0.517241,0.497238,-0.0344824,0.453039,0.206897,-0.00552443,0.206897,-0.502762,0.482759],0]
+			]
+			]
+		],
+		[
+		[
+			"Anchor",
+			cr.behaviors.Anchor,
+			5142624735653224
+		]
+		],
+		false,
+		false,
+		226274308503358,
+		[]
+	]
+,	[
+		"t10",
+		cr.plugins_.Particles,
+		false,
+		[6065741135741005],
+		1,
+		0,
+		["images/fumaca.png", 234, 0],
+		null,
+		[
+		[
+			"Pin",
+			cr.behaviors.Pin,
+			4810863835820339
+		]
+		],
+		false,
+		false,
+		5219280745598871,
+		[]
+	]
+,	[
+		"t11",
+		cr.plugins_.Text,
+		false,
+		[],
+		0,
+		0,
+		null,
+		null,
+		[
+		],
+		false,
+		false,
+		9736471805218733,
+		[]
+	]
+,	[
+		"t12",
+		cr.plugins_.Sprite,
+		false,
+		[],
+		0,
+		0,
+		null,
+		[
+			[
+			"Explosao",
+			35,
+			false,
+			1,
+			0,
+			false,
+			9931196859509486,
+			[
+				["images/explosao-sheet0.png", 32879, 1, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 66, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 131, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 1, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 66, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 131, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 1, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 66, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet0.png", 32879, 131, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 1, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 66, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 131, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 1, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 66, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 131, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 1, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 66, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet1.png", 46914, 131, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 1, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 66, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 131, 1, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 1, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 66, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 131, 66, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 1, 131, 64, 64, 1, 0.5, 0.5,[],[],0],
+				["images/explosao-sheet2.png", 23193, 66, 131, 64, 64, 1, 0.5, 0.5,[],[],0]
+			]
+			]
+		],
+		[
+		],
+		false,
+		false,
+		500898187490206,
 		[]
 	]
 	],
@@ -15481,6 +16201,8 @@ cr.getProjectModel = function() { return [
 				2,
 				3,
 				[
+					[0],
+					[0]
 				],
 				[
 				[
@@ -15535,14 +16257,22 @@ cr.getProjectModel = function() { return [
 				]
 			]
 ,			[
-				[1101, 1172, 0, 48, 30, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+				[1101, 1172, 0, 48, 30, 0, -1.5708, 1, 0.5, 0.5, 0, 0, []],
 				0,
 				1,
 				[
 					[""],
-					[0]
+					[3]
 				],
 				[
+				[
+					1
+				],
+				[
+					1,
+					4,
+					1
+				]
 				],
 				[
 					0,
@@ -15553,9 +16283,13 @@ cr.getProjectModel = function() { return [
 			]
 ,			[
 				[654, 1289, 0, 512, 512, 0, 0, 1, 0, 0, 0, 0, []],
-				7,
+				6,
 				7,
 				[
+					[""],
+					[0],
+					[3],
+					[0],
 					[""],
 					[0]
 				],
@@ -15564,6 +16298,43 @@ cr.getProjectModel = function() { return [
 				[
 					0,
 					0
+				]
+			]
+,			[
+				[923, 1186, 0, 181, 29, 0, 0, 1, 0.502762, 0.517241, 0, 0, []],
+				9,
+				12,
+				[
+				],
+				[
+				[
+					0,
+					0,
+					0,
+					0,
+					1
+				]
+				],
+				[
+					0,
+					"Default",
+					0,
+					1
+				]
+			]
+,			[
+				[600.385, 1204.62, 0, 93.9149, 93.9149, 0, 1.5708, 1, 0.5, 0.5, 0, 0, []],
+				12,
+				14,
+				[
+				],
+				[
+				],
+				[
+					0,
+					"Default",
+					0,
+					1
 				]
 			]
 			],
@@ -15639,9 +16410,9 @@ cr.getProjectModel = function() { return [
 			[			]
 		]
 ,		[
-			"Texto",
+			"Limites",
 			4,
-			4298375243116297,
+			1580425006520617,
 			true,
 			[255, 255, 255],
 			true,
@@ -15654,9 +16425,99 @@ cr.getProjectModel = function() { return [
 			0,
 			[
 			[
-				[264, 442, 0, 339, 177, 0, 0, 1, 0, 0, 0, 0, []],
-				5,
+				[-24, 536, 0, 47, 1098, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+				8,
 				6,
+				[
+				],
+				[
+				[
+					1
+				]
+				],
+				[
+					0,
+					"Default",
+					0,
+					1
+				]
+			]
+,			[
+				[1447, 520, 0, 47, 1098, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+				8,
+				9,
+				[
+				],
+				[
+				[
+					1
+				]
+				],
+				[
+					0,
+					"Default",
+					0,
+					1
+				]
+			]
+,			[
+				[711, -25, 0, 1510, 49, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+				8,
+				10,
+				[
+				],
+				[
+				[
+					1
+				]
+				],
+				[
+					0,
+					"Default",
+					0,
+					1
+				]
+			]
+,			[
+				[711, 1092, 0, 1510, 49, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+				8,
+				11,
+				[
+				],
+				[
+				[
+					1
+				]
+				],
+				[
+					0,
+					"Default",
+					0,
+					1
+				]
+			]
+			],
+			[			]
+		]
+,		[
+			"Saúde",
+			5,
+			4742726232583994,
+			true,
+			[255, 255, 255],
+			true,
+			0,
+			0,
+			1,
+			false,
+			1,
+			0,
+			0,
+			[
+			[
+				[-304, 209, 0, 200, 30, 0, 0, 1, 0, 0, 0, 0, []],
+				11,
+				13,
 				[
 				],
 				[
@@ -15676,11 +16537,62 @@ cr.getProjectModel = function() { return [
 			],
 			[			]
 		]
+,		[
+			"Texto",
+			6,
+			4298375243116297,
+			true,
+			[255, 255, 255],
+			true,
+			1,
+			1,
+			1,
+			false,
+			1,
+			0,
+			0,
+			[
+			[
+				[800, 1265, 0, 128, 128, 0, -1.91986, 1, 0, 0.5, 0, 0, []],
+				10,
+				15,
+				[
+					[""]
+				],
+				[
+				[
+				]
+				],
+				[
+					50,
+					30,
+					0,
+					26,
+					13,
+					5,
+					0,
+					0,
+					0,
+					0,
+					20,
+					0,
+					0,
+					0,
+					0,
+					0,
+					2,
+					0,
+					0.5
+				]
+			]
+			],
+			[			]
+		]
 		],
 		[
 			[
 				null,
-				8,
+				7,
 				8,
 				[
 				],
@@ -15752,7 +16664,7 @@ cr.getProjectModel = function() { return [
 				],
 				[
 				[
-					6,
+					5,
 					cr.plugins_.Socket.prototype.acts.Connect,
 					null,
 					3136923713780131,
@@ -15762,7 +16674,7 @@ cr.getProjectModel = function() { return [
 						1,
 						[
 							2,
-							"http://navinhas.cloudno.de/"
+							"127.0.0.1"
 						]
 					]
 ,					[
@@ -15770,6 +16682,40 @@ cr.getProjectModel = function() { return [
 						[
 							0,
 							9637
+						]
+					]
+					]
+				]
+,				[
+					-1,
+					cr.system_object.prototype.acts.CreateObject,
+					null,
+					6020465690340104,
+					false
+					,[
+					[
+						4,
+						9
+					]
+,					[
+						5,
+						[
+							2,
+							"Saúde"
+						]
+					]
+,					[
+						0,
+						[
+							0,
+							105
+						]
+					]
+,					[
+						0,
+						[
+							0,
+							30
 						]
 					]
 					]
@@ -15805,6 +16751,28 @@ cr.getProjectModel = function() { return [
 					]
 					]
 				]
+				]
+			]
+,			[
+				0,
+				null,
+				false,
+				null,
+				358945388267426,
+				[
+				[
+					-1,
+					cr.system_object.prototype.cnds.EveryTick,
+					null,
+					0,
+					false,
+					false,
+					false,
+					3680253461074396,
+					false
+				]
+				],
+				[
 				]
 			]
 			]
@@ -15848,7 +16816,7 @@ cr.getProjectModel = function() { return [
 				2195281363021551,
 				[
 				[
-					6,
+					5,
 					cr.plugins_.Socket.prototype.cnds.OnConnect,
 					null,
 					1,
@@ -15870,7 +16838,7 @@ cr.getProjectModel = function() { return [
 				2921018421366622,
 				[
 				[
-					6,
+					5,
 					cr.plugins_.Socket.prototype.cnds.IsDataAvailable,
 					null,
 					0,
@@ -15883,7 +16851,7 @@ cr.getProjectModel = function() { return [
 				],
 				[
 				[
-					6,
+					5,
 					cr.plugins_.Socket.prototype.acts.SplitDataReceived,
 					null,
 					5724959309137551,
@@ -15913,7 +16881,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16016,7 +16984,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16078,7 +17046,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16116,7 +17084,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16142,7 +17110,7 @@ cr.getProjectModel = function() { return [
 						]
 					]
 ,					[
-						7,
+						6,
 						cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
 						null,
 						0,
@@ -16234,6 +17202,23 @@ cr.getProjectModel = function() { return [
 					]
 ,					[
 						4,
+						cr.behaviors.Pin.prototype.acts.Pin,
+						"Pin",
+						1618082851828233,
+						false
+						,[
+						[
+							4,
+							0
+						]
+,						[
+							3,
+							0
+						]
+						]
+					]
+,					[
+						4,
 						cr.plugins_.Particles.prototype.acts.SetInstanceVar,
 						null,
 						8757535763712272,
@@ -16247,7 +17232,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16258,23 +17243,6 @@ cr.getProjectModel = function() { return [
 								]
 								]
 							]
-						]
-						]
-					]
-,					[
-						4,
-						cr.behaviors.Pin.prototype.acts.Pin,
-						"Pin",
-						1618082851828233,
-						false
-						,[
-						[
-							4,
-							0
-						]
-,						[
-							3,
-							0
 						]
 						]
 					]
@@ -16309,7 +17277,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16324,7 +17292,7 @@ cr.getProjectModel = function() { return [
 						]
 					]
 ,					[
-						7,
+						6,
 						cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
 						null,
 						6841929013746708,
@@ -16338,7 +17306,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16353,7 +17321,7 @@ cr.getProjectModel = function() { return [
 						]
 					]
 ,					[
-						7,
+						6,
 						cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
 						null,
 						9478372110015716,
@@ -16399,7 +17367,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16447,7 +17415,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16478,7 +17446,7 @@ cr.getProjectModel = function() { return [
 								,[
 [
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16500,7 +17468,7 @@ cr.getProjectModel = function() { return [
 								,[
 [
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16531,7 +17499,7 @@ cr.getProjectModel = function() { return [
 								,[
 [
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16571,7 +17539,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16619,7 +17587,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16650,7 +17618,7 @@ cr.getProjectModel = function() { return [
 								,[
 [
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16672,7 +17640,7 @@ cr.getProjectModel = function() { return [
 								,[
 [
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16703,7 +17671,7 @@ cr.getProjectModel = function() { return [
 								,[
 [
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16746,6 +17714,33 @@ cr.getProjectModel = function() { return [
 						]
 						]
 					]
+,					[
+						0,
+						cr.plugins_.Sprite.prototype.acts.Spawn,
+						null,
+						34792508433705,
+						false
+						,[
+						[
+							4,
+							2
+						]
+,						[
+							5,
+							[
+								2,
+								"Nave"
+							]
+						]
+,						[
+							7,
+							[
+								0,
+								1
+							]
+						]
+						]
+					]
 					]
 				]
 ,				[
@@ -16753,7 +17748,7 @@ cr.getProjectModel = function() { return [
 					null,
 					false,
 					null,
-					529936695608803,
+					2033851170979403,
 					[
 					[
 						-1,
@@ -16763,14 +17758,14 @@ cr.getProjectModel = function() { return [
 						false,
 						false,
 						false,
-						8834979374197371,
+						7441967052595535,
 						false
 						,[
 						[
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16790,7 +17785,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								2,
-								"DeletarJogador"
+								"DestruirJogador"
 							]
 						]
 						]
@@ -16803,7 +17798,7 @@ cr.getProjectModel = function() { return [
 						false,
 						false,
 						false,
-						267978049405843,
+						3207353679499464,
 						false
 						,[
 						[
@@ -16818,7 +17813,7 @@ cr.getProjectModel = function() { return [
 							7,
 							[
 								20,
-								6,
+								5,
 								cr.plugins_.Socket.prototype.exps.LastDataElement,
 								true,
 								null
@@ -16836,9 +17831,36 @@ cr.getProjectModel = function() { return [
 					[
 					[
 						0,
+						cr.plugins_.Sprite.prototype.acts.Spawn,
+						null,
+						2812261835999601,
+						false
+						,[
+						[
+							4,
+							12
+						]
+,						[
+							5,
+							[
+								2,
+								"Nave"
+							]
+						]
+,						[
+							7,
+							[
+								0,
+								0
+							]
+						]
+						]
+					]
+,					[
+						0,
 						cr.plugins_.Sprite.prototype.acts.Destroy,
 						null,
-						4072494934901353,
+						6351230735229212,
 						false
 					]
 					]
@@ -16848,7 +17870,7 @@ cr.getProjectModel = function() { return [
 						null,
 						false,
 						null,
-						9018606345954497,
+						4806083697983791,
 						[
 						[
 							4,
@@ -16858,7 +17880,7 @@ cr.getProjectModel = function() { return [
 							false,
 							false,
 							false,
-							2653924233380223,
+							6681355448550394,
 							false
 							,[
 							[
@@ -16873,7 +17895,7 @@ cr.getProjectModel = function() { return [
 								7,
 								[
 									20,
-									6,
+									5,
 									cr.plugins_.Socket.prototype.exps.LastDataElement,
 									true,
 									null
@@ -16893,8 +17915,1048 @@ cr.getProjectModel = function() { return [
 							4,
 							cr.plugins_.Particles.prototype.acts.Destroy,
 							null,
-							377612645443218,
+							5116259280110446,
 							false
+						]
+						]
+					]
+,					[
+						0,
+						null,
+						false,
+						null,
+						1214945970861708,
+						[
+						[
+							10,
+							cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							9675160760960751,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							10,
+							cr.plugins_.Particles.prototype.acts.Destroy,
+							null,
+							3424038199362335,
+							false
+						]
+						]
+					]
+					]
+				]
+,				[
+					0,
+					null,
+					false,
+					null,
+					3740026972928236,
+					[
+					[
+						-1,
+						cr.system_object.prototype.cnds.Compare,
+						null,
+						0,
+						false,
+						false,
+						false,
+						6471380169500199,
+						false
+						,[
+						[
+							7,
+							[
+								20,
+								5,
+								cr.plugins_.Socket.prototype.exps.LastDataElement,
+								true,
+								null
+								,[
+[
+									0,
+									0
+								]
+								]
+							]
+						]
+,						[
+							8,
+							0
+						]
+,						[
+							7,
+							[
+								2,
+								"AtualizarPosicoes"
+							]
+						]
+						]
+					]
+,					[
+						0,
+						cr.plugins_.Sprite.prototype.cnds.PickByUID,
+						null,
+						0,
+						false,
+						false,
+						true,
+						6632687989734679,
+						false
+						,[
+						[
+							0,
+							[
+								21,
+								6,
+								false,
+								null
+								,1
+							]
+						]
+						]
+					]
+					],
+					[
+					[
+						5,
+						cr.plugins_.Socket.prototype.acts.Emit,
+						null,
+						7385998723498298,
+						false
+						,[
+						[
+							1,
+							[
+								2,
+								"Posicao"
+							]
+						]
+,						[
+							1,
+							[
+								10,
+								[
+									10,
+									[
+										10,
+										[
+											10,
+											[
+												20,
+												0,
+												cr.plugins_.Sprite.prototype.exps.X,
+												false,
+												null
+											]
+											,[
+												2,
+												","
+											]
+										]
+										,[
+											20,
+											0,
+											cr.plugins_.Sprite.prototype.exps.Y,
+											false,
+											null
+										]
+									]
+									,[
+										2,
+										","
+									]
+								]
+								,[
+									20,
+									0,
+									cr.plugins_.Sprite.prototype.exps.Angle,
+									false,
+									null
+								]
+							]
+						]
+						]
+					]
+					]
+				]
+,				[
+					0,
+					null,
+					false,
+					null,
+					9632270474034373,
+					[
+					[
+						-1,
+						cr.system_object.prototype.cnds.Compare,
+						null,
+						0,
+						false,
+						false,
+						false,
+						4295185750221042,
+						false
+						,[
+						[
+							7,
+							[
+								20,
+								5,
+								cr.plugins_.Socket.prototype.exps.LastDataElement,
+								true,
+								null
+								,[
+[
+									0,
+									0
+								]
+								]
+							]
+						]
+,						[
+							8,
+							0
+						]
+,						[
+							7,
+							[
+								2,
+								"Acertou"
+							]
+						]
+						]
+					]
+,					[
+						0,
+						cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+						null,
+						0,
+						false,
+						false,
+						false,
+						2057936396971162,
+						false
+						,[
+						[
+							10,
+							0
+						]
+,						[
+							8,
+							0
+						]
+,						[
+							7,
+							[
+								20,
+								5,
+								cr.plugins_.Socket.prototype.exps.LastDataElement,
+								true,
+								null
+								,[
+[
+									0,
+									1
+								]
+								]
+							]
+						]
+						]
+					]
+					],
+					[
+					[
+						0,
+						cr.plugins_.Sprite.prototype.acts.SetInstanceVar,
+						null,
+						2065642132949992,
+						false
+						,[
+						[
+							10,
+							1
+						]
+,						[
+							7,
+							[
+								5,
+								[
+									21,
+									0,
+									false,
+									null
+									,1
+								]
+								,[
+									0,
+									1
+								]
+							]
+						]
+						]
+					]
+					]
+					,[
+					[
+						0,
+						null,
+						false,
+						null,
+						4301346026556197,
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							8696234809621371,
+							false
+							,[
+							[
+								10,
+								1
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									0,
+									3
+								]
+							]
+							]
+						]
+,						[
+							6,
+							cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							8486699171559478,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							9,
+							cr.plugins_.Sprite.prototype.acts.SetAnim,
+							null,
+							8440108918518684,
+							false
+							,[
+							[
+								1,
+								[
+									2,
+									"Cheio"
+								]
+							]
+,							[
+								3,
+								0
+							]
+							]
+						]
+						]
+					]
+,					[
+						0,
+						null,
+						false,
+						null,
+						2558262030372761,
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							9576679565597089,
+							false
+							,[
+							[
+								10,
+								1
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									0,
+									2
+								]
+							]
+							]
+						]
+,						[
+							6,
+							cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							5258764133105343,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							9,
+							cr.plugins_.Sprite.prototype.acts.SetAnim,
+							null,
+							1809544364365173,
+							false
+							,[
+							[
+								1,
+								[
+									2,
+									"Metade"
+								]
+							]
+,							[
+								3,
+								0
+							]
+							]
+						]
+						]
+					]
+,					[
+						0,
+						null,
+						false,
+						null,
+						549033541491381,
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							5741785865506213,
+							false
+							,[
+							[
+								10,
+								1
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									0,
+									1
+								]
+							]
+							]
+						]
+,						[
+							6,
+							cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							2382465922206559,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							9,
+							cr.plugins_.Sprite.prototype.acts.SetAnim,
+							null,
+							8829165298785609,
+							false
+							,[
+							[
+								1,
+								[
+									2,
+									"Pouco"
+								]
+							]
+,							[
+								3,
+								0
+							]
+							]
+						]
+						]
+					]
+,					[
+						0,
+						null,
+						false,
+						null,
+						7737794966325557,
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							8715745700053178,
+							false
+							,[
+							[
+								10,
+								1
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									0,
+									0
+								]
+							]
+							]
+						]
+,						[
+							6,
+							cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							5441898474811572,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							9,
+							cr.plugins_.Sprite.prototype.acts.SetAnim,
+							null,
+							3340988635239554,
+							false
+							,[
+							[
+								1,
+								[
+									2,
+									"Vazio"
+								]
+							]
+,							[
+								3,
+								0
+							]
+							]
+						]
+						]
+					]
+,					[
+						0,
+						null,
+						false,
+						null,
+						2690564586577077,
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							7740537956475541,
+							false
+							,[
+							[
+								10,
+								1
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									0,
+									1
+								]
+							]
+							]
+						]
+,						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							1018169354519604,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.acts.Spawn,
+							null,
+							9130972883704689,
+							false
+							,[
+							[
+								4,
+								10
+							]
+,							[
+								5,
+								[
+									2,
+									"Nave"
+								]
+							]
+,							[
+								7,
+								[
+									2,
+									"Fumaca"
+								]
+							]
+							]
+						]
+,						[
+							10,
+							cr.plugins_.Particles.prototype.acts.SetInstanceVar,
+							null,
+							853086997770047,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+,						[
+							10,
+							cr.plugins_.Particles.prototype.acts.SetAngle,
+							null,
+							6686596378537929,
+							false
+							,[
+							[
+								0,
+								[
+									0,
+									250
+								]
+							]
+							]
+						]
+,						[
+							10,
+							cr.behaviors.Pin.prototype.acts.Pin,
+							"Pin",
+							6906003370182716,
+							false
+							,[
+							[
+								4,
+								0
+							]
+,							[
+								3,
+								0
+							]
+							]
+						]
+						]
+					]
+,					[
+						0,
+						null,
+						false,
+						null,
+						1427976977905812,
+						[
+						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							47474354852973,
+							false
+							,[
+							[
+								10,
+								1
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									0,
+									0
+								]
+							]
+							]
+						]
+,						[
+							0,
+							cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							4521436656840102,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+,						[
+							4,
+							cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							4702770320549915,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+,						[
+							10,
+							cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
+							null,
+							0,
+							false,
+							false,
+							false,
+							5598232738984776,
+							false
+							,[
+							[
+								10,
+								0
+							]
+,							[
+								8,
+								0
+							]
+,							[
+								7,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
+						]
+						],
+						[
+						[
+							5,
+							cr.plugins_.Socket.prototype.acts.Emit,
+							null,
+							9859259924734067,
+							false
+							,[
+							[
+								1,
+								[
+									2,
+									"DestruirJogador"
+								]
+							]
+,							[
+								1,
+								[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										1
+									]
+									]
+								]
+							]
+							]
 						]
 						]
 					]
@@ -16974,7 +19036,7 @@ cr.getProjectModel = function() { return [
 						0,
 						[
 							21,
-							7,
+							6,
 							false,
 							null
 							,1
@@ -16982,13 +19044,81 @@ cr.getProjectModel = function() { return [
 					]
 					]
 				]
+,				[
+					6,
+					cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
+					null,
+					0,
+					false,
+					false,
+					false,
+					2454710656793454,
+					false
+					,[
+					[
+						10,
+						5
+					]
+,					[
+						8,
+						0
+					]
+,					[
+						7,
+						[
+							0,
+							0
+						]
+					]
+					]
+				]
 				],
 				[
 				[
+					6,
+					cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
+					null,
+					4339935139831028,
+					false
+					,[
+					[
+						10,
+						3
+					]
+,					[
+						7,
+						[
+							0,
+							1
+						]
+					]
+					]
+				]
+,				[
+					6,
+					cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
+					null,
+					3701621699138682,
+					false
+					,[
+					[
+						10,
+						4
+					]
+,					[
+						7,
+						[
+							2,
+							"Frente"
+						]
+					]
+					]
+				]
+,				[
 					0,
 					cr.plugins_.Sprite.prototype.acts.MoveAtAngle,
 					null,
-					4094962825676092,
+					2046491994379502,
 					false
 					,[
 					[
@@ -17007,6 +19137,19 @@ cr.getProjectModel = function() { return [
 							0,
 							4
 						]
+					]
+					]
+				]
+,				[
+					0,
+					cr.behaviors.custom.prototype.acts.PushOutSolid,
+					"CustomMovement",
+					7896093441272425,
+					false
+					,[
+					[
+						3,
+						1
 					]
 					]
 				]
@@ -17030,7 +19173,7 @@ cr.getProjectModel = function() { return [
 					null,
 					false,
 					null,
-					6637995908409346,
+					4807122157485348,
 					[
 					[
 						-1,
@@ -17040,14 +19183,14 @@ cr.getProjectModel = function() { return [
 						false,
 						false,
 						false,
-						1791104871709046,
+						1508900275915144,
 						false
 						,[
 						[
 							0,
 							[
 								1,
-								0.1
+								0.05
 							]
 						]
 						]
@@ -17055,10 +19198,10 @@ cr.getProjectModel = function() { return [
 					],
 					[
 					[
-						6,
+						5,
 						cr.plugins_.Socket.prototype.acts.Emit,
 						null,
-						1923858244749881,
+						6560343940401537,
 						false
 						,[
 						[
@@ -17157,7 +19300,7 @@ cr.getProjectModel = function() { return [
 						0,
 						[
 							21,
-							7,
+							6,
 							false,
 							null
 							,1
@@ -17165,9 +19308,77 @@ cr.getProjectModel = function() { return [
 					]
 					]
 				]
+,				[
+					6,
+					cr.plugins_.TiledBg.prototype.cnds.CompareInstanceVar,
+					null,
+					0,
+					false,
+					false,
+					false,
+					145844296087364,
+					false
+					,[
+					[
+						10,
+						5
+					]
+,					[
+						8,
+						0
+					]
+,					[
+						7,
+						[
+							0,
+							0
+						]
+					]
+					]
+				]
 				],
 				[
 				[
+					6,
+					cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
+					null,
+					4905658959148268,
+					false
+					,[
+					[
+						10,
+						3
+					]
+,					[
+						7,
+						[
+							0,
+							1
+						]
+					]
+					]
+				]
+,				[
+					6,
+					cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
+					null,
+					9049258285826177,
+					false
+					,[
+					[
+						10,
+						4
+					]
+,					[
+						7,
+						[
+							2,
+							"Tras"
+						]
+					]
+					]
+				]
+,				[
 					0,
 					cr.plugins_.Sprite.prototype.acts.MoveAtAngle,
 					null,
@@ -17190,6 +19401,19 @@ cr.getProjectModel = function() { return [
 							0,
 							-4
 						]
+					]
+					]
+				]
+,				[
+					0,
+					cr.behaviors.custom.prototype.acts.PushOutSolid,
+					"CustomMovement",
+					9157628235395102,
+					false
+					,[
+					[
+						3,
+						1
 					]
 					]
 				]
@@ -17223,14 +19447,14 @@ cr.getProjectModel = function() { return [
 						false,
 						false,
 						false,
-						6666604982387237,
+						4141942060141625,
 						false
 						,[
 						[
 							0,
 							[
 								1,
-								0.1
+								0.05
 							]
 						]
 						]
@@ -17238,7 +19462,7 @@ cr.getProjectModel = function() { return [
 					],
 					[
 					[
-						6,
+						5,
 						cr.plugins_.Socket.prototype.acts.Emit,
 						null,
 						8979931073793955,
@@ -17340,7 +19564,7 @@ cr.getProjectModel = function() { return [
 						0,
 						[
 							21,
-							7,
+							6,
 							false,
 							null
 							,1
@@ -17396,14 +19620,14 @@ cr.getProjectModel = function() { return [
 						false,
 						false,
 						false,
-						6424301089881127,
+						8895717270309131,
 						false
 						,[
 						[
 							0,
 							[
 								1,
-								0.1
+								0.05
 							]
 						]
 						]
@@ -17411,7 +19635,7 @@ cr.getProjectModel = function() { return [
 					],
 					[
 					[
-						6,
+						5,
 						cr.plugins_.Socket.prototype.acts.Emit,
 						null,
 						3956705179488638,
@@ -17513,7 +19737,7 @@ cr.getProjectModel = function() { return [
 						0,
 						[
 							21,
-							7,
+							6,
 							false,
 							null
 							,1
@@ -17569,14 +19793,14 @@ cr.getProjectModel = function() { return [
 						false,
 						false,
 						false,
-						5065076333511679,
+						1106742243669687,
 						false
 						,[
 						[
 							0,
 							[
 								1,
-								0.1
+								0.05
 							]
 						]
 						]
@@ -17584,7 +19808,7 @@ cr.getProjectModel = function() { return [
 					],
 					[
 					[
-						6,
+						5,
 						cr.plugins_.Socket.prototype.acts.Emit,
 						null,
 						4160442096133585,
@@ -17643,6 +19867,94 @@ cr.getProjectModel = function() { return [
 						]
 						]
 					]
+					]
+				]
+				]
+			]
+			]
+		]
+,		[
+			0,
+			null,
+			false,
+			null,
+			9652197180360559,
+			[
+			[
+				1,
+				cr.plugins_.Keyboard.prototype.cnds.IsKeyDown,
+				null,
+				0,
+				false,
+				true,
+				false,
+				480210560305782,
+				false
+				,[
+				[
+					9,
+					38
+				]
+				]
+			]
+,			[
+				1,
+				cr.plugins_.Keyboard.prototype.cnds.IsKeyDown,
+				null,
+				0,
+				false,
+				true,
+				false,
+				8763618968181398,
+				false
+				,[
+				[
+					9,
+					40
+				]
+				]
+			]
+,			[
+				0,
+				cr.plugins_.Sprite.prototype.cnds.PickByUID,
+				null,
+				0,
+				false,
+				false,
+				true,
+				7859054927758377,
+				false
+				,[
+				[
+					0,
+					[
+						21,
+						6,
+						false,
+						null
+						,1
+					]
+				]
+				]
+			]
+			],
+			[
+			[
+				6,
+				cr.plugins_.TiledBg.prototype.acts.SetInstanceVar,
+				null,
+				2127228768723785,
+				false
+				,[
+				[
+					10,
+					3
+				]
+,				[
+					7,
+					[
+						0,
+						0
 					]
 				]
 				]
@@ -17719,7 +20031,7 @@ cr.getProjectModel = function() { return [
 						0,
 						[
 							21,
-							7,
+							6,
 							false,
 							null
 							,1
@@ -17730,7 +20042,7 @@ cr.getProjectModel = function() { return [
 				],
 				[
 				[
-					6,
+					5,
 					cr.plugins_.Socket.prototype.acts.Emit,
 					null,
 					8844164253680399,
@@ -17816,7 +20128,193 @@ cr.getProjectModel = function() { return [
 					]
 					]
 				]
+,				[
+					2,
+					cr.plugins_.Sprite.prototype.acts.SetInstanceVar,
+					null,
+					1503304180355503,
+					false
+					,[
+					[
+						10,
+						0
+					]
+,					[
+						7,
+						[
+							19,
+							cr.system_object.prototype.exps["int"]
+							,[
+[
+								21,
+								6,
+								true,
+								null
+								,0
+							]
+							]
+						]
+					]
+					]
 				]
+				]
+			]
+			]
+		]
+,		[
+			0,
+			[true, "Colisão Tiro (Própria Nave)"],
+			false,
+			null,
+			8107355646418218,
+			[
+			[
+				-1,
+				cr.system_object.prototype.cnds.IsGroupActive,
+				null,
+				0,
+				false,
+				false,
+				false,
+				8107355646418218,
+				false
+				,[
+				[
+					1,
+					[
+						2,
+						"Colisão Tiro (Própria Nave)"
+					]
+				]
+				]
+			]
+			],
+			[
+			]
+		]
+,		[
+			0,
+			null,
+			false,
+			null,
+			518161001133217,
+			[
+			[
+				2,
+				cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+				null,
+				0,
+				false,
+				false,
+				false,
+				201870402023243,
+				false
+				,[
+				[
+					10,
+					0
+				]
+,				[
+					8,
+					1
+				]
+,				[
+					7,
+					[
+						19,
+						cr.system_object.prototype.exps["int"]
+						,[
+[
+							21,
+							6,
+							true,
+							null
+							,0
+						]
+						]
+					]
+				]
+				]
+			]
+,			[
+				2,
+				cr.plugins_.Sprite.prototype.cnds.IsOverlapping,
+				null,
+				0,
+				false,
+				false,
+				false,
+				2481257211002919,
+				false
+				,[
+				[
+					4,
+					0
+				]
+				]
+			]
+			],
+			[
+			[
+				5,
+				cr.plugins_.Socket.prototype.acts.Emit,
+				null,
+				4695368695862198,
+				false
+				,[
+				[
+					1,
+					[
+						2,
+						"Acertou"
+					]
+				]
+,				[
+					1,
+					[
+						21,
+						6,
+						true,
+						null
+						,0
+					]
+				]
+				]
+			]
+			]
+		]
+,		[
+			0,
+			null,
+			false,
+			null,
+			3357716922096373,
+			[
+			[
+				2,
+				cr.plugins_.Sprite.prototype.cnds.IsOverlapping,
+				null,
+				0,
+				false,
+				false,
+				false,
+				9781869260670892,
+				false
+				,[
+				[
+					4,
+					0
+				]
+				]
+			]
+			],
+			[
+			[
+				2,
+				cr.plugins_.Sprite.prototype.acts.Destroy,
+				null,
+				6549914216809833,
+				false
 			]
 			]
 		]
@@ -17836,7 +20334,7 @@ cr.getProjectModel = function() { return [
 	false,
 	0,
 	false,
-	9,
+	16,
 	false,
 	[
 	]
