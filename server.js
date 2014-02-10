@@ -25,24 +25,24 @@ var idNave = 0;
 
 io.sockets.on('connection', function(socket) {
   console.log('IDS NAVES:'+idsNaves);
-	idNave++;
-	var sockid = socket["id"];
+  idNave++;
+  var sockid = socket["id"];
     jogadores[sockid] = socket;
     socket.set('idNave', idNave);
 
     console.log(idsNaves);
     //Cria os jogadores já conectados
-  	for(var i = 0; i < idsNaves.length; i++) {
-  		socket.send("CriarJogadores,"+idsNaves[i]);
-  	}
+    for(var i = 0; i < idsNaves.length; i++) {
+      socket.send("CriarJogadores,"+idsNaves[i]);
+    }
 
-  	//Adiciona novo jogador
+    //Adiciona novo jogador
     idsNaves.push(idNave);
 
     //Adiciona para o socket
-  	socket.send("CriarNave,"+idNave);
+    socket.send("CriarNave,"+idNave);
 
-  	//Adiciona para o resto
+    //Adiciona para o resto
     socket.broadcast.send("CriarJogadores,"+idNave);
 
     //Atualiza posições
@@ -52,8 +52,8 @@ io.sockets.on('connection', function(socket) {
         xya = data.split(",");
 
         socket.get('idNave', function (err, id_nave) {
-        	socket.broadcast.send("Posicao,"+id_nave+","+xya[0]+","+xya[1]+","+xya[2]);
-    	});
+          socket.broadcast.send("Posicao,"+id_nave+","+xya[0]+","+xya[1]+","+xya[2]);
+      });
     });
 
     socket.on('Tiro', function(data) {
@@ -83,21 +83,21 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
-    	console.log("---------------------user disconnected------------------------");
-    	
-    	var sockid = socket["id"];
+      console.log("---------------------user disconnected------------------------");
+      
+      var sockid = socket["id"];
         var i = jogadores.indexOf(sockid);
         jogadores.splice(i,1);
 
         socket.get('idNave', function (err, id_nave) {
-        	var i = idsNaves.indexOf(id_nave);
+          var i = idsNaves.indexOf(id_nave);
             console.log(id_nave+"///"+i+"///"+idsNaves);
-        	if(i != -1) { idsNaves.splice(i,1); }
+          if(i != -1) { idsNaves.splice(i,1); }
 
-        	io.sockets.send("DestruirJogador,"+id_nave);
-        	idNave++;
-    	  });
-		
+          io.sockets.send("DestruirJogador,"+id_nave);
+          idNave++;
+        });
+    
     });
 
 });
