@@ -48,6 +48,12 @@ io.sockets.on('connection', function(socket) {
     //Atualiza posições
     socket.broadcast.send("AtualizarPosicoes");
 
+    socket.on('Saude', function(data) {
+        socket.get('idNave', function (err, id_nave) {
+          socket.broadcast.send("Saude,"+id_nave+","+data);
+      });
+    });
+
     socket.on('Posicao', function(data) {
         xya = data.split(",");
 
@@ -78,7 +84,7 @@ io.sockets.on('connection', function(socket) {
         console.log(id_nave+"///"+i+"///"+idsNaves);
         if(i != -1) { idsNaves.splice(i,1); }
 
-        io.sockets.send("DestruirJogador,"+id_nave);
+        //io.sockets.send("DestruirJogador,"+id_nave);
         idNave++;
     });
 

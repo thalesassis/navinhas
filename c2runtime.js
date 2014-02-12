@@ -17714,33 +17714,6 @@ cr.getProjectModel = function() { return [
 						]
 						]
 					]
-,					[
-						0,
-						cr.plugins_.Sprite.prototype.acts.Spawn,
-						null,
-						34792508433705,
-						false
-						,[
-						[
-							4,
-							2
-						]
-,						[
-							5,
-							[
-								2,
-								"Nave"
-							]
-						]
-,						[
-							7,
-							[
-								0,
-								1
-							]
-						]
-						]
-					]
 					]
 				]
 ,				[
@@ -18104,6 +18077,161 @@ cr.getProjectModel = function() { return [
 									cr.plugins_.Sprite.prototype.exps.Angle,
 									false,
 									null
+								]
+							]
+						]
+						]
+					]
+,					[
+						5,
+						cr.plugins_.Socket.prototype.acts.Emit,
+						null,
+						3278031047852647,
+						false
+						,[
+						[
+							1,
+							[
+								2,
+								"Saude"
+							]
+						]
+,						[
+							1,
+							[
+								19,
+								cr.system_object.prototype.exps.str
+								,[
+[
+									21,
+									0,
+									false,
+									null
+									,1
+								]
+								]
+							]
+						]
+						]
+					]
+					]
+				]
+,				[
+					0,
+					null,
+					false,
+					null,
+					519516334200124,
+					[
+					[
+						-1,
+						cr.system_object.prototype.cnds.Compare,
+						null,
+						0,
+						false,
+						false,
+						false,
+						5876631223769224,
+						false
+						,[
+						[
+							7,
+							[
+								20,
+								5,
+								cr.plugins_.Socket.prototype.exps.LastDataElement,
+								true,
+								null
+								,[
+[
+									0,
+									0
+								]
+								]
+							]
+						]
+,						[
+							8,
+							0
+						]
+,						[
+							7,
+							[
+								2,
+								"Saude"
+							]
+						]
+						]
+					]
+,					[
+						0,
+						cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+						null,
+						0,
+						false,
+						false,
+						false,
+						6160733364899752,
+						false
+						,[
+						[
+							10,
+							0
+						]
+,						[
+							8,
+							0
+						]
+,						[
+							7,
+							[
+								20,
+								5,
+								cr.plugins_.Socket.prototype.exps.LastDataElement,
+								true,
+								null
+								,[
+[
+									0,
+									1
+								]
+								]
+							]
+						]
+						]
+					]
+					],
+					[
+					[
+						0,
+						cr.plugins_.Sprite.prototype.acts.SetInstanceVar,
+						null,
+						4351948796018887,
+						false
+						,[
+						[
+							10,
+							1
+						]
+,						[
+							7,
+							[
+								19,
+								cr.system_object.prototype.exps["int"]
+								,[
+[
+									20,
+									5,
+									cr.plugins_.Socket.prototype.exps.LastDataElement,
+									true,
+									null
+									,[
+[
+										0,
+										2
+									]
+									]
+								]
 								]
 							]
 						]
@@ -18850,80 +18978,6 @@ cr.getProjectModel = function() { return [
 							]
 							]
 						]
-,						[
-							4,
-							cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
-							null,
-							0,
-							false,
-							false,
-							false,
-							4702770320549915,
-							false
-							,[
-							[
-								10,
-								0
-							]
-,							[
-								8,
-								0
-							]
-,							[
-								7,
-								[
-									20,
-									5,
-									cr.plugins_.Socket.prototype.exps.LastDataElement,
-									true,
-									null
-									,[
-[
-										0,
-										1
-									]
-									]
-								]
-							]
-							]
-						]
-,						[
-							10,
-							cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
-							null,
-							0,
-							false,
-							false,
-							false,
-							5598232738984776,
-							false
-							,[
-							[
-								10,
-								0
-							]
-,							[
-								8,
-								0
-							]
-,							[
-								7,
-								[
-									20,
-									5,
-									cr.plugins_.Socket.prototype.exps.LastDataElement,
-									true,
-									null
-									,[
-[
-										0,
-										1
-									]
-									]
-								]
-							]
-							]
-						]
 						],
 						[
 						[
@@ -18955,6 +19009,152 @@ cr.getProjectModel = function() { return [
 									]
 									]
 								]
+							]
+							]
+						]
+,						[
+							0,
+							cr.plugins_.Sprite.prototype.acts.Spawn,
+							null,
+							16681704573137,
+							false
+							,[
+							[
+								4,
+								12
+							]
+,							[
+								5,
+								[
+									2,
+									"Nave"
+								]
+							]
+,							[
+								7,
+								[
+									0,
+									0
+								]
+							]
+							]
+						]
+,						[
+							0,
+							cr.plugins_.Sprite.prototype.acts.Destroy,
+							null,
+							4173369534363887,
+							false
+						]
+						]
+						,[
+						[
+							0,
+							null,
+							false,
+							null,
+							905053393760792,
+							[
+							[
+								4,
+								cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
+								null,
+								0,
+								false,
+								false,
+								false,
+								6114399422318151,
+								false
+								,[
+								[
+									10,
+									0
+								]
+,								[
+									8,
+									0
+								]
+,								[
+									7,
+									[
+										20,
+										5,
+										cr.plugins_.Socket.prototype.exps.LastDataElement,
+										true,
+										null
+										,[
+[
+											0,
+											1
+										]
+										]
+									]
+								]
+								]
+							]
+							],
+							[
+							[
+								4,
+								cr.plugins_.Particles.prototype.acts.Destroy,
+								null,
+								8681430687059198,
+								false
+							]
+							]
+						]
+,						[
+							0,
+							null,
+							false,
+							null,
+							2469349156008025,
+							[
+							[
+								10,
+								cr.plugins_.Particles.prototype.cnds.CompareInstanceVar,
+								null,
+								0,
+								false,
+								false,
+								false,
+								7579686729921271,
+								false
+								,[
+								[
+									10,
+									0
+								]
+,								[
+									8,
+									0
+								]
+,								[
+									7,
+									[
+										20,
+										5,
+										cr.plugins_.Socket.prototype.exps.LastDataElement,
+										true,
+										null
+										,[
+[
+											0,
+											1
+										]
+										]
+									]
+								]
+								]
+							]
+							],
+							[
+							[
+								10,
+								cr.plugins_.Particles.prototype.acts.Destroy,
+								null,
+								7748614041481643,
+								false
 							]
 							]
 						]
@@ -19454,7 +19654,7 @@ cr.getProjectModel = function() { return [
 							0,
 							[
 								1,
-								0.05
+								0.07
 							]
 						]
 						]
@@ -19627,7 +19827,7 @@ cr.getProjectModel = function() { return [
 							0,
 							[
 								1,
-								0.05
+								0.07
 							]
 						]
 						]
@@ -19800,7 +20000,7 @@ cr.getProjectModel = function() { return [
 							0,
 							[
 								1,
-								0.05
+								0.07
 							]
 						]
 						]
