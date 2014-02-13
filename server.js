@@ -66,7 +66,7 @@ io.sockets.on('connection', function(socket) {
         xya = data.split(",");
 
         socket.get('idNave', function (err, id_nave) {
-          socket.broadcast.send("Tiro,"+id_nave+","+xya[0]+","+xya[1]+","+xya[2]);
+          socket.broadcast.send("Tiro,"+id_nave+","+xya[0]+","+xya[1]+","+xya[2]+","+xya[3]);
       });
     });
 
