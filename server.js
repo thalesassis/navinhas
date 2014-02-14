@@ -66,7 +66,7 @@ io.sockets.on('connection', function(socket) {
         xya = data.split(",");
 
         socket.get('idNave', function (err, id_nave) {
-          io.sockets.send("Tiro,"+id_nave+","+xya[0]+","+xya[1]+","+xya[2]+","+xya[3]);
+          socket.broadcast.send("Tiro,"+id_nave+","+xya[0]+","+xya[1]+","+xya[2]+","+xya[3]);
       });
     });
 
@@ -107,66 +107,3 @@ io.sockets.on('connection', function(socket) {
     });
 
 });
-
-/*
-app.get('/', function(req, res){
-  res.render('index');
-});
-
-app.get('/chat', function(req, res){
-  res.redirect('/');
-});
-
-app.post('/chat', function(req, res){
-  var user = req.body.user;
-  if(user.nome == "") {
-    res.redirect('/');
-  } else {
-    res.render('chat', {user:user});
-  }
-});
-
-var io = require('socket.io').listen(app.listen(3000));
-
-var jogadores = [];
- 
-io.sockets.on('connection', function(socket) {
-    jogadores.push(socket);
-
-    socket.on('message_to_server', function(data) {
-        var escaped_message = sanitize(data["message"]).escape();
-        io.sockets.emit("message_to_client",{ message: escaped_message });
-    });
-
-    socket.on('novo_usuario', function(data) {
-        var escaped_message = sanitize(data["nome"]).escape();
-        
-        socket.set('nickname', escaped_message);
-
-        var lista_nicknames = [];
-        for(var i = 0; i < jogadores.length; i++) {
-            var sock = jogadores[i];
-            console.log(sock);
-            sock.get('nickname', function (err, name) {
-                lista_nicknames.push(name);
-            });
-        }
-
-        io.sockets.emit("lista", { message : lista_nicknames });
-        
-        var msg = '<strong>'+ escaped_message + '</strong> entrou na sala.';
-        io.sockets.emit("message_to_client", { message : msg });
-    
-
-    });
-
-    socket.on('disconnect', function() {
-        var i = jogadores.indexOf(socket);
-        delete jogadores[i];
-
-        socket.get('nickname', function (err, name) {
-          io.sockets.emit("message_to_client",{ message: name+' saiu da sala' });
-        });
-    });
-
-    */

@@ -20354,6 +20354,62 @@ cr.getProjectModel = function() { return [
 					]
 					]
 				]
+,				[
+					0,
+					cr.plugins_.Sprite.prototype.acts.Spawn,
+					null,
+					1717830773011192,
+					false
+					,[
+					[
+						4,
+						2
+					]
+,					[
+						5,
+						[
+							2,
+							"Nave"
+						]
+					]
+,					[
+						7,
+						[
+							0,
+							1
+						]
+					]
+					]
+				]
+,				[
+					2,
+					cr.plugins_.Sprite.prototype.acts.SetInstanceVar,
+					null,
+					4138861779977923,
+					false
+					,[
+					[
+						10,
+						0
+					]
+,					[
+						7,
+						[
+							19,
+							cr.system_object.prototype.exps["int"]
+							,[
+[
+								21,
+								6,
+								true,
+								null
+								,0
+							]
+							]
+						]
+					]
+					]
+				]
 				]
 			]
 			]
