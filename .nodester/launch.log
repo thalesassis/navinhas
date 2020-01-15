@@ -1,0 +1,441 @@
+81.169.187.71
+23 Jan 15:52:42 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+23 Jan 15:52:42 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+23 Jan 15:52:42 - Starting Daemon
+81.169.187.71
+23 Jan 15:52:56 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+23 Jan 15:52:56 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+23 Jan 15:52:56 - Starting Daemon
+81.169.187.71
+24 Jan 00:32:27 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:32:27 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:32:27 - Starting Daemon
+81.169.187.71
+24 Jan 00:33:19 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:33:19 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:33:19 - Starting Daemon
+81.169.187.71
+24 Jan 00:42:05 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:42:05 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:42:05 - Starting Daemon
+81.169.187.71
+24 Jan 00:47:21 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:47:21 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:47:21 - Starting Daemon
+81.169.187.71
+24 Jan 00:52:07 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:52:07 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:52:07 - Starting Daemon
+81.169.187.71
+24 Jan 00:53:51 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:53:51 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:53:51 - Starting Daemon
+81.169.187.71
+24 Jan 00:55:11 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:55:11 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:55:11 - Starting Daemon
+81.169.187.71
+24 Jan 00:56:57 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:56:57 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:56:57 - Starting Daemon
+81.169.187.71
+24 Jan 00:59:21 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 00:59:21 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 00:59:21 - Starting Daemon
+81.169.187.71
+24 Jan 01:02:36 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 01:02:36 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 01:02:36 - Starting Daemon
+81.169.187.71
+24 Jan 01:05:35 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 01:05:35 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 01:05:35 - Starting Daemon
+81.169.187.71
+24 Jan 01:09:22 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 01:09:22 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 01:09:22 - Starting Daemon
+81.169.187.71
+24 Jan 01:11:05 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 01:11:05 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 01:11:05 - Starting Daemon
+81.169.187.71
+24 Jan 01:13:09 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+24 Jan 01:13:09 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+24 Jan 01:13:09 - Starting Daemon
+81.169.187.71
+10 Feb 17:05:40 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+10 Feb 17:05:40 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+10 Feb 17:05:40 - Starting Daemon
+81.169.187.71
+10 Feb 17:27:31 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+10 Feb 17:27:31 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+10 Feb 17:27:31 - Starting Daemon
+81.169.187.71
+10 Feb 17:32:44 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+10 Feb 17:32:44 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+10 Feb 17:32:44 - Starting Daemon
+81.169.187.71
+10 Feb 17:39:46 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+10 Feb 17:39:46 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+10 Feb 17:39:46 - Starting Daemon
+81.169.187.71
+12 Feb 16:01:45 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+12 Feb 16:01:45 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+12 Feb 16:01:45 - Starting Daemon
+81.169.187.71
+13 Feb 16:15:50 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+13 Feb 16:15:50 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+13 Feb 16:15:50 - Starting Daemon
+81.169.187.71
+14 Feb 15:40:15 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+14 Feb 15:40:15 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+14 Feb 15:40:15 - Starting Daemon
+81.169.187.71
+14 Feb 15:44:00 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+14 Feb 15:44:00 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+14 Feb 15:44:00 - Starting Daemon
+81.169.187.71
+14 Feb 21:54:50 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' } }
+14 Feb 21:54:50 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+14 Feb 21:54:50 - Starting Daemon
+
+>>>
+2 Jun 08:31:19 - Host IP: 81.169.187.71
+2 Jun 08:31:19 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+2 Jun 08:31:19 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+2 Jun 08:31:19 - Daemon started
+<<<
+
+
+>>>
+13 Jun 08:40:36 - Host IP: 81.169.187.71
+13 Jun 08:40:36 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+13 Jun 08:40:36 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+13 Jun 08:40:36 - Daemon started
+<<<
+
+
+>>>
+14 Jul 21:27:06 - Host IP: 81.169.187.71
+14 Jul 21:27:06 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+14 Jul 21:27:06 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+14 Jul 21:27:06 - Daemon started
+<<<
+
+
+>>>
+28 Jul 19:47:25 - Host IP: 81.169.187.71
+28 Jul 19:47:25 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+28 Jul 19:47:25 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+28 Jul 19:47:25 - Daemon started
+<<<
+
+
+>>>
+1 Jul 23:25:09 - Host IP: 81.169.187.71
+1 Jul 23:25:09 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+1 Jul 23:25:09 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+1 Jul 23:25:09 - Daemon started
+<<<
+
+
+>>>
+15 Oct 07:54:30 - Host IP: 81.169.187.71
+15 Oct 07:54:30 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+15 Oct 07:54:30 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+15 Oct 07:54:30 - Daemon started
+<<<
+
+
+>>>
+15 Oct 08:26:39 - Host IP: 81.169.187.71
+15 Oct 08:26:39 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+15 Oct 08:26:39 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+15 Oct 08:26:39 - Daemon started
+<<<
+
+
+>>>
+15 Oct 08:48:11 - Host IP: 81.169.187.71
+15 Oct 08:48:11 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+15 Oct 08:48:11 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+15 Oct 08:48:11 - Daemon started
+<<<
+
+
+>>>
+15 Oct 21:52:20 - Host IP: 81.169.187.71
+15 Oct 21:52:20 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 501,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: '127.0.0.1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'cloudnode' }
+15 Oct 21:52:20 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+15 Oct 21:52:20 - Daemon started
+<<<
+
+createCredentials() is deprecated, use tls.createSecureContext instead
+
+>>>
+13 Nov 00:44:50 - Host IP: 78.46.66.55
+13 Nov 00:44:50 - Config: { appdir: '/var/cloudnode/nodester',
+  userid: 1010,
+  apphome: '/app/thalesu/1637-b86c56c706183011967e0f780a0a2c10',
+  start: 'server.js',
+  port: 9637,
+  ip: 'node_1',
+  name: 'navinhas',
+  env: { node_version: '0.8' },
+  username: 'node' }
+13 Nov 00:44:50 - Root: /app/thalesu/1637-b86c56c706183011967e0f780a0a2c10
+13 Nov 00:44:50 - Daemon started
+<<<
+
+13 Nov 00:44:50 - Checking for /tmp
+13 Nov 00:44:50 - Checking for /mnt
+13 Nov 00:44:50 - Checking for /home
+13 Nov 00:44:50 - Checking for /etc
+13 Nov 00:44:50 - Update /etc/resolve.conf with Googles DNS servers..
